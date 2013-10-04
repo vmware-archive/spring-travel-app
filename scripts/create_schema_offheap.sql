@@ -1,5 +1,5 @@
 create hdfsstore sta_datastore 
-namenode 'hdfs://kuwait.gemstone.com:9000' 
+namenode 'hdfs://<hostname>:9000' 
 homedir 'sta_tables' 
 batchsize 100 
 batchtimeinterval 1000 
