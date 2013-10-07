@@ -28,7 +28,7 @@
         <longProp name="ThreadGroup.start_time">1379709681000</longProp>
         <longProp name="ThreadGroup.end_time">1379709681000</longProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
-        <stringProp name="ThreadGroup.duration">1200</stringProp>
+        <stringProp name="ThreadGroup.duration">57600</stringProp>
         <stringProp name="ThreadGroup.delay"></stringProp>
       </ThreadGroup>
       <hashTree>
@@ -49,8 +49,8 @@
         </JDBCDataSource>
         <hashTree/>
         <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="ID" enabled="true">
-          <stringProp name="CounterConfig.start">8000000</stringProp>
-          <stringProp name="CounterConfig.end">999999999</stringProp>
+          <stringProp name="CounterConfig.start">1</stringProp>
+          <stringProp name="CounterConfig.end">9999999999</stringProp>
           <stringProp name="CounterConfig.incr">1</stringProp>
           <stringProp name="CounterConfig.name">BookId</stringProp>
           <stringProp name="CounterConfig.format"></stringProp>
@@ -350,7 +350,7 @@ vars.put(&quot;HotelId&quot;, &quot;&quot;+ hotelId);</stringProp>
       <hashTree>
         <JDBCDataSource guiclass="TestBeanGUI" testclass="JDBCDataSource" testname="JDBC Connection Configuration" enabled="true">
           <boolProp name="autocommit">true</boolProp>
-          <stringProp name="checkQuery">Select 1</stringProp>
+          <stringProp name="checkQuery"></stringProp>
           <stringProp name="connectionAge">5000</stringProp>
           <stringProp name="dataSource">Bookings</stringProp>
           <stringProp name="dbUrl">jdbc:sqlfire://china.gemstone.com:1527/</stringProp>
