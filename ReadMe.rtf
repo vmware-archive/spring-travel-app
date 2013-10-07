@@ -1,0 +1,334 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1138\cocoasubrtf510
+{\fonttbl\f0\fswiss\fcharset0 ArialMT;\f1\froman\fcharset0 Times-Roman;\f2\fmodern\fcharset0 CourierNewPSMT;
+}
+{\colortbl;\red255\green255\blue255;\red9\green58\blue202;\red26\green26\blue26;\red255\green255\blue255;
+}
+\margl1440\margr1440\vieww23720\viewh11240\viewkind0
+\deftab720
+\pard\pardeftab720\sl340
+
+\f0\b\fs30 \cf0 Pre-requisites
+\f1\b0\fs24 \
+\pard\pardeftab720\sl340
+
+\f0\fs30 \cf0 1) Pivotal HD setup 
+\f1\fs24 \
+\pard\pardeftab720\sl340
+{\field{\*\fldinst{HYPERLINK "https://wiki.gemstone.com/display/gfepersistence/Running+HDFS+in+the+WDC"}}{\fldrslt 
+\f0\fs30 \cf2 \ul \ulc2 https://wiki.gemstone.com/display/gfepersistence/Running+HDFS+in+the+WDC}}\
+\pard\pardeftab720
+\cf0 \
+\pard\pardeftab720\sl340
+
+\f0\fs30 \cf0 2) Starting the sqlfire locator and servers. 
+\f1\fs24 \
+\pard\pardeftab720\sl340
+{\field{\*\fldinst{HYPERLINK "http://review.eng.vmware.com/infocenter-sqlfire-helios/index.jsp?topic=/com.vmware.vfabric.sqlfire.1.1/getting_started/"}}{\fldrslt 
+\f0\fs30 \cf2 \ul \ulc2 http://review.eng.vmware.com/infocenter-sqlfire-helios/index.jsp?topic=/com.vmware.vfabric.sqlfire.1.1/getting_started/}}\
+\pard\pardeftab720
+\cf0 \
+\pard\pardeftab720\sl340
+
+\f0\fs30 \cf0 3) Get the app and the map reduce job from here 
+\b \'a0\'a0
+\f1\b0\fs24 \
+\pard\pardeftab720\sl340
+
+\f0\b\fs30 \cf0  git clone 
+\b0 ssh://
+\i username
+\i0 @kuwait.gemstone.com/kuwait1/users/gfxd-sta/gfxd-sta.git
+\f1\fs24 \
+\pard\pardeftab720
+\cf0 \
+*************************************************************************************************************************\
+\pard\pardeftab720\sl340
+
+\f0\b\fs30 \cf0 1) Create the schema required for this project and import the initial data required for the app. 
+\f1\b0\fs24 \
+\pard\pardeftab720
+\cf0 \
+\pard\pardeftab720\sl340
+
+\f0\fs30 \cf0 From the checkout , scripts/create_schema.sql is used to define the schema. 
+\f1\fs24 \
+
+\f0\fs30 Before running the script you will have to modify the create_schema.sql.
+\f1\fs24 \
+\pard\pardeftab720
+\cf0 \
+\pard\pardeftab720\sl340
+
+\f0\fs30 \cf0 In the "create hdfsstore" statement change the value of the "namenode" parameter to point to the URL name node that you have started.
+\f1\fs24 \
+
+\f0\fs30 hostname of the host on which the name node was started and the port number(the default port of namenode is 9000).
+\f1\fs24 \
+
+\f0\fs30 The URL format \'a0: 'hdfs://hostname:port'
+\f1\fs24 \
+\pard\pardeftab720
+\cf0 \
+\pard\pardeftab720\sl340
+
+\f0\fs30 \cf0 create hdfsstore sta_datastore 
+\f1\fs24 \
+
+\f0\fs30 namenode 'hdfs://kuwait.gemstone.com:9000' 
+\f1\fs24 \
+
+\f0\fs30 homedir 'sta_tables' 
+\f1\fs24 \
+
+\f0\fs30 batchsize 100 
+\f1\fs24 \
+
+\f0\fs30 batchtimeinterval 600000 
+\f1\fs24 \
+
+\f0\fs30 queuepersistent true; 
+\f1\fs24 \
+\pard\pardeftab720
+\cf0 \
+\pard\pardeftab720\sl340
+
+\f0\fs30 \cf0 After the modifications. Start the sqlf command line tool and connect to the sqlfire locator
+\f1\fs24 \
+
+\f0\fs30 sqlf>connect client 'locator_hostname:port';
+\f1\fs24 \
+
+\f0\fs30 sqlf>run 'scripts/create_schema.sql';
+\f1\fs24 \
+
+\f0\fs30 sqlf>run 'scripts/import.sql';
+\f1\fs24 \
+\pard\pardeftab720
+\cf0 \
+\
+\pard\pardeftab720\sl340
+
+\f0\b\fs30 \cf0 2) Building and running the app. 
+\f1\b0\fs24 \
+\pard\pardeftab720\sl340
+
+\f0\fs30 \cf0 Install maven artifacts required by the app
+\f1\fs24 \
+\pard\pardeftab720\sl340
+
+\f2\fs30 \cf3 \cb4 >mvn install:install-file -DgroupId=com.gopivotal.sqlfire -DartifactId=sqlf-dialect -Dversion=1.0 -Dpackaging=jar -Dfile=$GEMFIREXD/hidden/lib/sqlfHibernateDialect.jar
+\f1\fs24 \cf0 \cb1 \
+\pard\pardeftab720
+\cf0 \
+\
+\pard\pardeftab720\sl340
+
+\f2\fs30 \cf3 \cb4 >mvn install:install-file -DgroupId=com.gopivotal.sqlfire -DartifactId=sqlf-client -Dversion=1.0 -Dpackaging=jar -Dfile=$GEMFIREXD/lib/sqlfireclient.jar
+\f1\fs24 \cf0 \cb1 \
+\pard\pardeftab720
+\cf0 \
+\pard\pardeftab720\sl340
+
+\f2\fs30 \cf3 \cb4 >mvn install:install-file -DgroupId=com.gopivotal.sqlfire -DartifactId=sqlfire -Dversion=1.0 -Dpackaging=jar -Dfile=$GEMFIREXD/lib/sqlfire.jar
+\f1\fs24 \cf0 \cb1 \
+\pard\pardeftab720
+\cf0 \
+\pard\pardeftab720\sl340
+
+\f0\fs30 \cf0 Modify the Spring travel app to connect to the sqlfire locator. 
+\f1\fs24 \
+
+\f0\fs30 In the app booking-mvc/src/main/webapp/WEB-INF/config/data-access-config.xml. 
+\f1\fs24 \
+
+\f0\fs30 Modify the url property to point to the correct sqlfire locator of your cluster. 
+\f1\fs24 \
+\pard\pardeftab720
+\cf0 \
+\pard\pardeftab720\sl340
+
+\f0\fs30 \cf0 <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+\f1\fs24 \
+
+\f0\fs30 		<property name="driverClassName" value="com.vmware.sqlfire.internal.jdbc.ClientDataSource" />
+\f1\fs24 \
+
+\f0\fs30 		<property name="url" value="jdbc:sqlfire://kuwait.gemstone.com:1527/" />
+\f1\fs24 \
+
+\f0\fs30 		<property name="username" value="APP" />
+\f1\fs24 \
+
+\f0\fs30 		<property name="password" value="APP" />
+\f1\fs24 \
+
+\f0\fs30 </bean>
+\f1\fs24 \
+\pard\pardeftab720
+\cf0 \
+\pard\pardeftab720\sl340
+
+\f0\fs30 \cf0 *Build and run the app 
+\f1\fs24 \
+
+\f0\fs30 >cd booking-mvc 
+\f1\fs24 \
+
+\f0\fs30 >mvn tomcat:run
+\f1\fs24 \
+\pard\pardeftab720
+\cf0 \
+\pard\pardeftab720\sl340
+
+\f0\fs30 \cf0 3) Creating Bookings using JMETER 
+\f1\fs24 \
+\pard\pardeftab720
+\cf0 \
+\pard\pardeftab720\sl340
+
+\f0\fs30 \cf0 Download JMeter from: http://jmeter.apache.org/
+\f1\fs24 \
+\pard\pardeftab720
+\cf0 \
+\pard\pardeftab720\sl340
+
+\f0\fs30 \cf0 Open up the JMeter application.
+\f1\fs24 \
+
+\f0\fs30 With JMeter, open STATestPlan.jmx located in the git checkout in the JMeter directory.
+\f1\fs24 \
+
+\f0\fs30 The test plan will need to be modified and can be modified to do different workloads.
+\f1\fs24 \
+\pard\pardeftab720
+\cf0 \
+\pard\pardeftab720\sl340
+
+\f0\fs30 \cf0 The first change that needs to be made is the location of the sqlfireclient.jar.
+\f1\fs24 \
+
+\f0\fs30 Click on TestPlan (located in the left side menu)
+\f1\fs24 \
+
+\f0\fs30 Click the Browse button to add directory or jar to classpath.
+\f1\fs24 \
+
+\f0\fs30 Add the sqlfireclient.jar.
+\f1\fs24 \
+\pard\pardeftab720
+\cf0 \
+\pard\pardeftab720\sl340
+
+\f0\fs30 \cf0 Next we need to edit the jdbc connection url\uc0\u8232 Expand the Test Plan and JDBC Users sub menus
+\f1\fs24 \
+
+\f0\fs30 Click on JDBC Connection Configuration
+\f1\fs24 \
+
+\f0\fs30 Modify the database url and replace the hostname and port with the location of your GemFireXD locator
+\f1\fs24 \
+\pard\pardeftab720
+\cf0 \
+\pard\pardeftab720\sl340
+
+\f0\fs30 \cf0 Running the test plan:
+\f1\fs24 \
+
+\f0\fs30 Click on the Green Arrow located in the top menu bar or start the test under the Run menu.
+\f1\fs24 \
+\pard\pardeftab720
+\cf0 \
+\pard\pardeftab720\sl340
+
+\f0\fs30 \cf0 Modifying the number of threads and iterations per thread
+\f1\fs24 \
+
+\f0\fs30 Click on JDBC Users.
+\f1\fs24 \
+
+\f0\fs30 Modify the number of threads and loop count fields to the desired amounts
+\f1\fs24 \
+\pard\pardeftab720
+\cf0 \
+\pard\pardeftab720\sl340
+
+\f0\fs30 \cf0 Turning on the Debug Sampler/View Results Tree
+\f1\fs24 \
+
+\f0\fs30 Currently both are disabled. \'a0You may enable them by right clicking on them and enabling.
+\f1\fs24 \
+
+\f0\fs30 Enabling will hinder performance but allow you to see the results of each step of the test plan. \'a0It may be helpful in debugging issues with the test plan.
+\f1\fs24 \
+\pard\pardeftab720
+\cf0 \
+\
+\
+\
+\pard\pardeftab720\sl340
+
+\f0\fs30 \cf0 4) Building and running the map-reduce jar
+\f1\fs24 \
+
+\f0\fs30 In your checkout build the map-reduce jar , do the following
+\f1\fs24 \
+\pard\pardeftab720
+\cf0 \
+\pard\pardeftab720\sl340
+
+\f0\fs30 \cf0 >cd sta-mapreduce
+\f1\fs24 \
+
+\f0\fs30 >mvn package
+\f1\fs24 \
+\pard\pardeftab720
+\cf0 \
+\pard\pardeftab720\sl340
+
+\f0\fs30 \cf0 You would find the jar in the 
+\f1\fs24 \
+
+\f0\fs30 sta-mapreduce/target directory 
+\f1\fs24 \
+\pard\pardeftab720
+\cf0 \
+\
+\pard\pardeftab720\sl340
+
+\f0\fs30 \cf0 *Before running the mapreduce job , make sure you have the sqlfire.jar and sqlfireclient.jar on the HADOOP_CLASSPATH 
+\f1\fs24 \
+\pard\pardeftab720
+\cf0 \
+\pard\pardeftab720\sl340
+
+\f0\fs30 \cf0 >export HADOOP_CLASSPATH=/export/gcm/where/gemfireXD/10/snaps.Any/snapshots.43932/product-sqlf/lib/sqlfire.jar:/export/gcm/where/gemfireXD/10/snaps.Any/snapshots.43932/product-sqlf/lib/sqlfireclient.jar
+\f1\fs24 \
+\pard\pardeftab720
+\cf0 \
+\
+\
+\pard\pardeftab720\sl340
+
+\f0\fs30 \cf0 Take that jar and run it on the machine where the hadoop is running and is part of your cluster;
+\f1\fs24 \
+
+\f0\fs30 Specify the "locator_host_name:locator_port" as the argument to the M-R job.
+\f1\fs24 \
+\pard\pardeftab720
+\cf0 \
+\pard\pardeftab720\sl340
+
+\f0\fs30 \cf0 To run the map-reduce job 
+\f1\fs24 \
+\pard\pardeftab720
+\cf0 \
+\pard\pardeftab720\sl340
+
+\f0\fs30 \cf0 >yarn jar sta-mapreduce-1.0-SNAPSHOT.jar com.gopivotal.sta.mr.TopBusyHotel kuwait.gemstone.com:1527
+\f1\fs24 \
+\pard\pardeftab720
+\cf0 \
+\
+\
+\
+}
