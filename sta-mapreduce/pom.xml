@@ -18,5 +18,10 @@
 			<artifactId>sqlfire</artifactId>
 			<version>1.0</version>
 		</dependency>
+		 <dependency>
+            <groupId>com.gopivotal.sqlfire</groupId>
+             <artifactId>sqlf-client</artifactId>
+             <version>1.0</version>
+          </dependency>
 	</dependencies>
 </project>
