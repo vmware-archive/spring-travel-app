@@ -1,11 +1,18 @@
 create hdfsstore sta_datastore 
-namenode 'hdfs://kuwait.gemstone.com:9000' 
+namenode 'hdfs://0.0.0.0:8020' 
 homedir 'sta_tables' 
 batchsize 100 
 batchtimeinterval 1000 
 queuepersistent true; 
 
 
+CREATE TABLE Booking (id bigint not null, beds int not null, checkinDate date not null, 
+checkoutDate date not null, creditCard varchar(255) not null, creditCardExpiryMonth int not null, creditCardExpiryYear int not null, creditCardName varchar(255) not null, smoking smallint, hotel_id bigint, user_username varchar(255), primary key (id))
+PARTITION BY PRIMARY KEY
+EVICTION BY CRITERIA ( id > 0 )
+EVICTION FREQUENCY 180 SECONDS
+PERSISTENT
+HDFSSTORE (STA_DATASTORE);
 
 create table Customer (username varchar(255) not null, name varchar(255), password varchar(255), primary key (username))
 persistent;
