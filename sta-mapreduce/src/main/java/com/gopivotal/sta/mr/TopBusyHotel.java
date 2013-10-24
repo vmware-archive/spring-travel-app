@@ -35,7 +35,7 @@ import com.vmware.sqlfire.hadoop.mapred.Key;
 import com.vmware.sqlfire.hadoop.mapred.Row;
 import com.vmware.sqlfire.hadoop.mapred.RowInputFormat;
 import com.vmware.sqlfire.hadoop.mapred.RowOutputFormat;
-import com.vmware.sqlfire.internal.engine.SqlfDataSerializable;
+//import com.vmware.sqlfire.internal.engine.SqlfDataSerializable;
 
 
 public class TopBusyHotel extends Configured implements Tool {
@@ -237,7 +237,7 @@ public class TopBusyHotel extends Configured implements Tool {
 	String sqlFireLocator = args[0];
 	String sqlFireURL = "jdbc:sqlfire://" + sqlFireLocator;
 	
-    SqlfDataSerializable.initTypes();
+//    SqlfDataSerializable.initTypes();
 
     JobConf conf = new JobConf(getConf());
     conf.setJobName("Busy Hotel Count");
