@@ -242,7 +242,7 @@ public class TopBusyHotel extends Configured implements Tool {
     JobConf conf = new JobConf(getConf());
     conf.setJobName("Busy Hotel Count");
 
-    String hdfsHomeDir = "sta_tables";
+    String hdfsHomeDir = "/sta_tables";
     String tableName = "APP.BOOKING";
     Path intermediateOutputPath = new Path("/int_output");
     Path outputPath = new Path ("/output");
