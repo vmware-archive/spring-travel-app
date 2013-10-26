@@ -1,9 +1,9 @@
 #!/bin/sh
 
-export GEMFIREXD=/export/gcm/where/gemfireXD/10/snaps.Any/snapshots.44310/
+export GEMFIREXD=<location of gemfirexd>
 export GEMFIREXD_JAR=$GEMFIREXD/product-sqlf/lib/sqlfire.jar
 export GEMFIREXD_CLIENT_JAR=$GEMFIREXD/product-sqlf/lib/sqlfireclient.jar
-export POSTGRES_JAR=/kuwait1/users/bansods/postgresql-9.2-1003.jdbc4.jar
+export POSTGRES_JAR=<location of postgresql-9.2-1003.jdbc4.jar>
 export PATH=$PATH:$GEMFIREXD/bin
 export HADOOP_CLASSPATH=$HADOOP_CLASSPATH:$GEMFIREXD_JAR:$GEMFIREXD_CLIENT_JAR
 
