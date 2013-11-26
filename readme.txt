@@ -2,13 +2,16 @@
 a) Pre-requisites
 ********************
 1) Pivotal HD setup
-https://wiki.gemstone.com/display/gfepersistence/Running+HDFS+in+the+WDC
+http://bitcast-a.v1.o1.sjc1.bitgravity.com/greenplum/pivotal-docs/P_HD_11_README.pdf
+
 2) Starting the sqlfire locator and servers.
-http://review.eng.vmware.com/infocenter-sqlfire-helios/index.jsp?topic=/com.vmware.ICbase/Welcome/welcome.html
+http://gemfirexd-05.run.pivotal.io/index.jsp?topic=/com.pivotal.gemfirexd.0.5-rn/pivotal-gemfirexd-0.5.beta.html
+
 3) Setting up and starting HAWQ
 
 **************************
 b) Data Overview
+
 **************************
 GemfireXD Tables
 
