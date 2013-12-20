@@ -13,7 +13,4 @@ CREATE TABLE Booking (id bigint not null, beds int not null, checkinDate date no
 
 create table hibernate_sequences (sequence_name varchar(255), sequence_next_hi_value integer);
 
-alter table Booking add constraint FK6713A039BF91BB8D foreign key (hotel_id) references Hotel;
-
-alter table Booking add constraint FK6713A03975CC21E2 foreign key (user_username) references Customer;
 
