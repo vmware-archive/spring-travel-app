@@ -5,7 +5,7 @@ a) Pre-requisites
 http://bitcast-a.v1.o1.sjc1.bitgravity.com/greenplum/pivotal-docs/P_HD_11_README.pdf
 
 2) Starting the sqlfire locator and servers.
-http://gemfirexd-05.run.pivotal.io/index.jsp?topic=/com.pivotal.gemfirexd.0.5-rn/pivotal-gemfirexd-0.5.beta.html
+https://gemfirexd-05.run.pivotal.io/index.jsp?topic=/com.pivotal.gemfirexd.0.5-rn/pivotal-gemfirexd-0.5.beta.html
 
 3) Setting up and starting HAWQ
 
@@ -82,7 +82,7 @@ Modify the url property to point to the correct sqlfire locator of your cluster.
 ******************************************************
 f) Creating Hotel Bookings using JMETER
 ******************************************************
-1)Download JMeter from: http://jmeter.apache.org/
+1)Download JMeter from: https://jmeter.apache.org/
 
 2) Open up the JMeter application.
 With JMeter, open STATestPlan.jmx located in the checkout in the JMeter directory.
@@ -160,7 +160,7 @@ format 'custom' (formatter='pxfwritable_import');
 
 
 To compile the jdbc aplication you would need the latest JDBC 4 driver for postgres
-You can dowload it here http://jdbc.postgresql.org/download.html
+You can dowload it here https://jdbc.postgresql.org/download.html
 
 
 
